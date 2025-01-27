@@ -1,8 +1,14 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/presentation/home_page/home_page.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    DevicePreview(
+      enabled: true,
+      builder: (context) => const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -10,9 +16,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      useInheritedMediaQuery: true, // Agar sesuai dengan Device Preview
+      locale: DevicePreview.locale(context), // Locale dari Device Preview
+      builder: DevicePreview.appBuilder, // Builder untuk Device Preview
+      home: const HomePage(),
     );
   }
 }
